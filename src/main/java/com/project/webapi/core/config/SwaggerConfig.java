@@ -1,4 +1,4 @@
-package com.project.webapi.config;
+package com.project.webapi.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

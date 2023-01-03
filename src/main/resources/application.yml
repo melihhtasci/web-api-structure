@@ -18,3 +18,12 @@ spring:
       path: /h2
       settings:
         web-allow-others: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 1000
+
+
+cache:
+  expirations:
+    category: 7200

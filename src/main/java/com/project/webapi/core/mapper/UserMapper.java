@@ -2,20 +2,23 @@ package com.project.webapi.core.mapper;
 
 import com.project.webapi.core.data.dao.User;
 import com.project.webapi.core.data.dto.UserDto;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserMapper {
+@Component
+public final class UserMapper extends BaseMapper<User, UserDto> {
 
-    public static User toEntity(UserDto dto) {
+    public User toEntity(UserDto dto) {
         return new User(dto.getName(), dto.getEmail(), dto.getPassword());
     }
-    public static UserDto toDto(User entity) {
+
+    public UserDto toDto(User entity) {
         return new UserDto(entity.getName(), entity.getEmail(), entity.getPassword(), "");
     }
 
-    public static List<UserDto> toDto(List<User> users) {
+    public List<UserDto> toDto(List<User> users) {
         List<UserDto> userDtos = new ArrayList<>();
         for (User user: users) {
             userDtos.add(toDto(user));

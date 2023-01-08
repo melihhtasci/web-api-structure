@@ -1,4 +1,4 @@
-package com.project.webapi.core.cache;
+package com.project.webapi.core.config.cache;
 
 import lombok.Getter;
 import lombok.Setter;

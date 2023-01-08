@@ -75,8 +75,6 @@ public class SeedData {
         createUsers();
         createCategories();
         createLanguages();
-        /*NewsResponse newsResponse = newsClientService.getByCategory("tr", "sports", NewsClientParameters.API_KEY.toString());
-        System.out.println(newsResponse.getStatus());*/
     }
 
 

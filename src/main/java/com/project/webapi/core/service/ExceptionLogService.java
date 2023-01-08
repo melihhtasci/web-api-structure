@@ -1,7 +1,7 @@
 package com.project.webapi.core.service;
 
 import com.project.webapi.core.data.dao.ExceptionLog;
-import com.project.webapi.core.repository.ExceptionLogRepository;
+import com.project.webapi.core.repository.jpa.ExceptionLogRepository;
 import org.springframework.stereotype.Service;
 
 @Service

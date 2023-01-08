@@ -1,4 +1,4 @@
-package com.project.webapi.core.repository;
+package com.project.webapi.core.repository.jpa;
 
 import com.project.webapi.core.data.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;

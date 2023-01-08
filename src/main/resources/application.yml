@@ -22,6 +22,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 1000
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss.SSS"
+    time-zone: "GMT+3"
+    serialization:
+      fail_on_empty_beans: false
 
 
 cache:

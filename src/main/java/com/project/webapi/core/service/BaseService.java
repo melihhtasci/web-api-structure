@@ -3,9 +3,12 @@ package com.project.webapi.core.service;
 import com.project.webapi.core.data.ExaminableDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+//@Repository
 public abstract class BaseService<T extends ExaminableDao, R extends JpaRepository<T, Long>> {
 
     public R repository;
@@ -35,14 +38,16 @@ public abstract class BaseService<T extends ExaminableDao, R extends JpaReposito
         return repository.save(entity);
     }
 
-    public T getById(long id) {
-        return repository.getById(id);
+   public Optional<T> getById(long id) {
+        return repository.findById(id);
     }
 
     private T setInitialValuesForAdd(T entity) {
         entity.setActive(true);
         entity.setCreatedDate(LocalDateTime.now());
-        // todo set createdBy entity.setCreatedBy(1);
+        entity.setUpdatedDate(LocalDateTime.now());
+        entity.setCreatedBy(1);
+        entity.setUpdatedBy(1);
         return entity;
     }
 

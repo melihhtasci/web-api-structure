@@ -4,10 +4,8 @@ import com.project.webapi.core.data.ExaminableDao;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,7 +13,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class News extends ExaminableDao {
+public class News extends ExaminableDao implements Serializable {
+
+    public static final long serialVersionUID = 1L;
 
     public News(String title, Category category, Author author) {
         this.title = title;
@@ -29,11 +29,11 @@ public class News extends ExaminableDao {
     public String urlToImage;
     public LocalDateTime publishedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="author_id", nullable=false)
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_id", nullable=false)
     private Category category;
 }

@@ -1,6 +1,6 @@
 package com.project.webapi.core.config;
 
-import com.project.webapi.core.cache.CacheProperties;
+import com.project.webapi.core.config.cache.CacheProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -13,15 +13,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import redis.clients.jedis.Jedis;
+
 import java.io.Serializable;
 
 @Configuration
@@ -63,21 +62,12 @@ public class CoreRedisConfiguration extends CachingConfigurerSupport {
         return manager;
     }
 
-    /*@Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration("localhost", 6379);
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(configuration);
-        return lettuceConnectionFactory;
-    }*/
-
     @EventListener(ApplicationReadyEvent.class)
     public void clearCache() {
-        System.out.println("Started to clear all caches.");
-        cacheManager.getCacheNames().stream().forEach(n -> {
-            cacheManager.getCache(n).clear();
-        });
-        System.out.println("Started to clear all caches.");
+        System.out.println("In Clear Cache");
+        Jedis jedis = new Jedis(cacheProperties.getHost(), cacheProperties.getPort(), 1000);
+        jedis.flushAll();
+        jedis.close();
     }
-
 
 }

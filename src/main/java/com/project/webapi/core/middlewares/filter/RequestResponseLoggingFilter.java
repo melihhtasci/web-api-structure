@@ -1,6 +1,7 @@
 package com.project.webapi.core.middlewares.filter;
 
 import com.project.webapi.core.data.dao.FlowLog;
+import com.project.webapi.core.service.FlowLogElasticService;
 import com.project.webapi.core.service.FlowLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -18,10 +19,12 @@ import java.nio.charset.StandardCharsets;
 public class RequestResponseLoggingFilter implements Filter {
 
     private FlowLogService flowLogService;
+    private FlowLogElasticService flowLogElasticService;
 
     @Autowired
-    public RequestResponseLoggingFilter(FlowLogService flowLogService) {
+    public RequestResponseLoggingFilter(FlowLogService flowLogService, FlowLogElasticService flowLogElasticService) {
         this.flowLogService = flowLogService;
+        this.flowLogElasticService = flowLogElasticService;
     }
 
     @Override
@@ -44,8 +47,10 @@ public class RequestResponseLoggingFilter implements Filter {
         if (path.startsWith("/api") && !method.equals("GET")) {
             String requestBody = new String(req.getContentAsByteArray(), StandardCharsets.UTF_8);
             String responseBody = new String(resp.getContentAsByteArray(), StandardCharsets.UTF_8);
+            System.out.println(responseBody.length() + " length of responsebody.");
+            FlowLog flowLog = flowLogService.add(new FlowLog(requestBody, responseBody, req.getMethod()));
+            flowLogElasticService.save(flowLog);
 
-            flowLogService.add(new FlowLog(requestBody, responseBody, req.getMethod()));
         }
 
         // todo log the response to app

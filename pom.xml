@@ -62,16 +62,21 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 			<version>2.4.3</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.13.4</version>
 		</dependency>
-
+		<!--Elastic search-->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
 
 	</dependencies>
 

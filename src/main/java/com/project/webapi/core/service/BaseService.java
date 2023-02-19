@@ -1,14 +1,19 @@
 package com.project.webapi.core.service;
 
 import com.project.webapi.core.data.ExaminableDao;
+import org.elasticsearch.common.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-//@Repository
 public abstract class BaseService<T extends ExaminableDao, R extends JpaRepository<T, Long>> {
 
     public R repository;
@@ -18,6 +23,7 @@ public abstract class BaseService<T extends ExaminableDao, R extends JpaReposito
         this.repository = repository;
     }
 
+    @Transactional
     public T add(T entity) {
         setInitialValuesForAdd(entity);
         repository.save(entity);
@@ -38,7 +44,7 @@ public abstract class BaseService<T extends ExaminableDao, R extends JpaReposito
         return repository.save(entity);
     }
 
-   public Optional<T> getById(long id) {
+    public Optional<T> getById(long id) {
         return repository.findById(id);
     }
 
@@ -55,6 +61,18 @@ public abstract class BaseService<T extends ExaminableDao, R extends JpaReposito
         entity.setUpdatedDate(LocalDateTime.now());
         // todo set updatedBy entity.setUpdatedBy(1);
         return entity;
+    }
+
+    public List<T> getByPaging(int page, int size, String columnName) {
+
+        if (size > 50)
+            size = 50;
+
+        if (Strings.isNullOrEmpty(columnName))
+            columnName = "createdDate";
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(columnName).descending());
+        return repository.findAll(pageable).toList();
     }
 
 }

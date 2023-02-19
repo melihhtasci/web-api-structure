@@ -1,5 +1,6 @@
 package com.project.webapi.core.data.dto;
 
+import com.project.webapi.core.data.BaseDto;
 import lombok.*;
 
 @Data
@@ -7,7 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDto extends BaseDto {
     public String name;
     public String email;
     public String password;

@@ -15,7 +15,7 @@ public class AuthorService extends BaseService<Author, AuthorRepository> {
 
 
     @Cacheable(cacheNames = "author", key = "#name", unless = "#result == null")
-    public Author getAuthorByName(String name) throws Exception {
+    public Author getAuthorByName(String name) {
         Optional<Author> author = repository.findByName(name).stream().findFirst();
         if (!author.isPresent()) {
             return add(new Author(name));

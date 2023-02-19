@@ -30,7 +30,7 @@ public class News extends ExaminableDao implements Serializable {
     public LocalDateTime publishedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="author_id", nullable=false)
+    @JoinColumn(name="author_id", nullable=true)
     private Author author;
 
     @ManyToOne(fetch = FetchType.EAGER)

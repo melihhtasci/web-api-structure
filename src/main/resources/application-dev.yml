@@ -21,8 +21,8 @@ spring:
       settings:
         web-allow-others: true
   redis:
-    host: localhost
-    port: 6379
+    host: ${REDIS_URL}
+    port: ${REDIS_PORT}
     timeout: 1000
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss.SSS"
@@ -31,8 +31,8 @@ spring:
       fail_on_empty_beans: false
 
 elasticsearch:
-  host: localhost
-  port: 9200
+  host: ${ES_URL}
+  port: ${ES_PORT}
 
 cache:
   expirations:

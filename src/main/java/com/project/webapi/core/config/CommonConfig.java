@@ -5,6 +5,5 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-
 public class CommonConfig {
 }

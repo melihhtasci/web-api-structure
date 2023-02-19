@@ -1,5 +1,9 @@
 package com.project.webapi.core.config;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.webapi.core.config.cache.CacheProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -16,12 +20,11 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.*;
 import redis.clients.jedis.Jedis;
 
 import java.io.Serializable;
+import java.time.Duration;
 
 @Configuration
 @EnableCaching
@@ -51,6 +54,26 @@ public class CoreRedisConfiguration extends CachingConfigurerSupport {
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+
+        /*RedisSerializer<String> redisSerializer = new StringRedisSerializer();
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        om.registerModules(new JavaTimeModule());
+
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ZERO)
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
+                .disableCachingNullValues();
+        return RedisCacheManager.builder(connectionFactory)
+                .cacheDefaults(config)
+                .build();*/
+
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
         RedisCacheConfiguration cacheConfiguration = configuration
                 .serializeKeysWith(RedisSerializationContext
@@ -65,6 +88,8 @@ public class CoreRedisConfiguration extends CachingConfigurerSupport {
     @EventListener(ApplicationReadyEvent.class)
     public void clearCache() {
         System.out.println("In Clear Cache");
+        System.out.println(cacheProperties.getHost());
+        System.out.println(cacheProperties.getPort());
         Jedis jedis = new Jedis(cacheProperties.getHost(), cacheProperties.getPort(), 1000);
         jedis.flushAll();
         jedis.close();

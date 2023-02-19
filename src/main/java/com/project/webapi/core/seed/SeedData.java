@@ -51,7 +51,8 @@ public class SeedData {
                     new Category("general", "api category"),
                     new Category("health", "api category"),
                     new Category("science", "api category"),
-                    new Category("technology", "api category")
+                    new Category("technology", "api category"),
+                    new Category("general", "api category")
             ));
             categoryService.addAll(categories);
         }

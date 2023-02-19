@@ -13,8 +13,6 @@ public abstract class BaseElasticService<T extends ExaminableDao, R extends Elas
     }
 
     public T save (T document) {
-        /*if (document.getId() > 0)
-            document.setId(0);*/
         document = repository.save(document);
         return document;
     }

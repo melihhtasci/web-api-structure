@@ -38,7 +38,6 @@ public class RequestResponseLoggingFilter implements Filter {
         ContentCachingRequestWrapper req = new ContentCachingRequestWrapper(request);
         ContentCachingResponseWrapper resp = new ContentCachingResponseWrapper(response);
 
-        // todo log the request to app
         filterChain.doFilter(req, resp);
 
         String method = req.getMethod();
@@ -53,7 +52,6 @@ public class RequestResponseLoggingFilter implements Filter {
 
         }
 
-        // todo log the response to app
         resp.copyBodyToResponse();
 
     }

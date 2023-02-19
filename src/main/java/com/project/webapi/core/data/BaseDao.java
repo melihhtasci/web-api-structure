@@ -15,4 +15,7 @@ public abstract class BaseDao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
+
+    @Version
+    private Integer version;
 }

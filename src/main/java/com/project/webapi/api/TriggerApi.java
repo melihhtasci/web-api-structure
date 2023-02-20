@@ -2,7 +2,7 @@ package com.project.webapi.api;
 
 import com.project.webapi.core.data.ApiResponse;
 import com.project.webapi.core.data.dao.FlowLog;
-import com.project.webapi.core.service.FlowLogElasticService;
+import com.project.webapi.core.service.es.FlowLogElasticService;
 import com.project.webapi.service.CategoryService;
 import com.project.webapi.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;

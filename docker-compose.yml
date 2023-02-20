@@ -1,44 +1,42 @@
-version: "3.8"
+version: '3.3'
 
 services:
-  java-api:
-    image: 329654/news-api:1.8
-    ports:
-      - 8023:8098
-    environment:
-      REDIS_URL: redis-common
-      REDIS_PORT: 6379
-      ES_URL: es-common
-      ES_PORT: 9200
-    networks:
-      - common-net
-  redis-common:
-      image: redis/redis-stack:latest
-      hostname: redis
-      ports:
-        - 6379:6379/tcp
-      networks:
-        - common-net
-  es-common:
-      image: docker.elastic.co/elasticsearch/elasticsearch:7.17.8
-      environment:
-        - node.name=personal-es
-        - cluster.name=es-docker-cluster
-        - discovery.type=single-node
-        - bootstrap.memory_lock=true
-        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      ulimits:
-        memlock:
-          soft: -1
-          hard: -1
-      volumes:
-        - ./.docker/elasticsearch_data:/usr/share/elasticsearch/data
-      ports:
-        - 9200:9200/tcp
-      networks:
-        - common-net
-          
-          
+   java-api:
+     image: 329654/news-api:1.8
+     ports:
+       - 8023:8098
+     environment:
+       REDIS_URL: redis-common
+       REDIS_PORT: 6379
+       ES_URL: es-common
+       ES_PORT: 9200
+     networks:
+       - common-net
+   redis-common:
+     image: redis/redis-stack:latest
+     hostname: redis
+     ports:
+       - 6379:6379/tcp
+     networks:
+       - common-net
+   es-common:
+     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.8
+     environment:
+       - node.name=personal-es
+       - cluster.name=es-docker-cluster
+       - discovery.type=single-node
+       - bootstrap.memory_lock=true
+       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+     ulimits:
+       memlock:
+         soft: -1
+         hard: -1
+     volumes:
+       - ./.docker/elasticsearch_data:/usr/share/elasticsearch/data
+     ports:
+       - 9200:9200/tcp
+     networks:
+       - common-net
 networks:
   common-net:
     driver: bridge

@@ -2,7 +2,8 @@ package com.project.webapi.core.middlewares;
 
 import com.project.webapi.core.data.ApiErrorResponse;
 import com.project.webapi.core.data.dao.ExceptionLog;
-import com.project.webapi.core.service.ExceptionLogService;
+import com.project.webapi.core.service.common.ExceptionLogService;
+import com.project.webapi.core.service.es.ExceptionLogElasticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,10 +18,13 @@ import java.net.InetAddress;
 public class ExceptionHandlerControllerAdvice {
 
     private ExceptionLogService exceptionLogService;
+    private ExceptionLogElasticService exceptionLogElasticService;
 
     @Autowired
-    public ExceptionHandlerControllerAdvice(ExceptionLogService exceptionLogService) {
+    public ExceptionHandlerControllerAdvice(ExceptionLogService exceptionLogService,
+                                            ExceptionLogElasticService exceptionLogElasticService) {
         this.exceptionLogService = exceptionLogService;
+        this.exceptionLogElasticService = exceptionLogElasticService;
     }
 
     @ExceptionHandler
@@ -29,6 +33,7 @@ public class ExceptionHandlerControllerAdvice {
         ExceptionLog exceptionLog = prepareExceptionLog(exception, request);
         // feed log to some place
         exceptionLogService.add(exceptionLog);
+        exceptionLogElasticService.save(exceptionLog);
         return new ApiErrorResponse("Error: " + exception.getMessage());
     }
 

@@ -1,7 +1,8 @@
-package com.project.webapi.core.service;
+package com.project.webapi.core.service.common;
 
 import com.project.webapi.core.data.dao.FlowLog;
 import com.project.webapi.core.repository.jpa.FlowLogRepository;
+import com.project.webapi.core.service.BaseService;
 import org.springframework.stereotype.Service;
 
 @Service

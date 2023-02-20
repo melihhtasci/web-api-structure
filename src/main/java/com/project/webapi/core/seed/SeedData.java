@@ -2,7 +2,7 @@ package com.project.webapi.core.seed;
 
 import com.project.webapi.clients.NewsClient;
 import com.project.webapi.core.data.dao.User;
-import com.project.webapi.core.service.UserService;
+import com.project.webapi.core.service.common.UserService;
 import com.project.webapi.data.dao.Category;
 import com.project.webapi.data.dao.Language;
 import com.project.webapi.service.CategoryService;

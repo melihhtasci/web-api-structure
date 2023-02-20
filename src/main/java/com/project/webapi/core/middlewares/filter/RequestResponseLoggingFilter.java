@@ -1,8 +1,8 @@
 package com.project.webapi.core.middlewares.filter;
 
 import com.project.webapi.core.data.dao.FlowLog;
-import com.project.webapi.core.service.FlowLogElasticService;
-import com.project.webapi.core.service.FlowLogService;
+import com.project.webapi.core.service.es.FlowLogElasticService;
+import com.project.webapi.core.service.common.FlowLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
